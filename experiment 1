@@ -1,0 +1,69 @@
+EXPERIMENT 1.1 Contains Duplicate (217)
+AIM :-Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+ALGORITH :- 
+1. Start.
+2. Create an empty unordered set s.
+3. Traverse the array nums from the first element to the last.
+4. For each element:
+    Check if the element is already present in the set.
+    If it is present, return True because a duplicate is found.
+    Otherwise, insert the element into the set.
+5. If the loop finishes without finding any duplicate, return False.
+6. End.
+
+CODE :-
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int> s;
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (s.find(nums[i]) != s.end()) {
+                return true;
+            }
+            s.insert(nums[i]);
+        }
+        return false;
+    }
+};
+
+
+EXPERIMENT 1.2 Contains Dupitcate-II (219)
+
+AIM:- Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+
+ALGORTHM :-
+1. Start
+2. Create an empty unordered map mp.
+3. Traverse the array from index 0 to n-1.
+4. For each element:
+    Check whether the element already exists in the map.
+    If it exists:
+      Calculate the difference between the current index and the stored index.
+      If the difference is less than or equal to k, return True.
+    Update the current index of that element in the map.
+5. If the loop finishes without finding such a pair, return False.
+6. End
+
+CODE:-
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+
+        unordered_map<int, int> mp;
+
+        for (int i = 0; i < nums.size(); i++) {
+
+            if (mp.find(nums[i]) != mp.end()) {
+
+                if (i - mp[nums[i]] <= k)
+                    return true;
+            }
+
+            mp[nums[i]] = i;
+        }
+
+        return false;
+    }
+};
