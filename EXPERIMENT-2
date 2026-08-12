@@ -52,6 +52,106 @@ public:
     }
 
     bool empty() {
+
         return s1.empty() && s2.empty();
+
+    }
+
+};
+
+
+AIM:- Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+ALGORITHM:- 
+
+1. Set low = 0 and high = n - 1.
+2. Find the middle index:
+    mid = low + (high - low) / 2
+3. Compare arr[mid] with target:
+    If arr[mid] == target, return mid.
+    If arr[mid] < target, search the right half by setting low = mid + 1.
+    If arr[mid] > target, search the left half by setting high = mid - 1.
+4. Repeat until low > high.
+5. If the target is not found, return low.
+   This is the correct position where the target should be inserted. Humanity survives another binary search.
+
+CODE:- 
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target)
+                return mid;
+            else if (nums[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+
+        return left;
+    }
+}; 
+
+
+AIM:-  SEARCH IN ROOTED SORTED ARRAY
+There is an integer array nums sorted in ascending order (with distinct values).
+
+Prior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].
+
+Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+
+ALGORITHM:- 
+1. Set low = 0 and high = n - 1.
+2. Find the middle index:
+    mid = low + (high - low) / 2
+3. If nums[mid] == target, return mid.
+4. Check which half is sorted:
+     If nums[low] <= nums[mid], the left half is sorted.
+    If target lies between nums[low] and nums[mid], search left.
+   Otherwise, search right.
+   Otherwise, the right half is sorted.
+   If target lies between nums[mid] and nums[high], search right.
+   Otherwise, search left.
+5. Repeat until low > high.
+6. If target is not found, return -1.
+
+CODE:- 
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int low = 0, high = nums.size() - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] == target)
+                return mid;
+
+            // Left half is sorted
+            if (nums[low] <= nums[mid]) {
+                if (nums[low] <= target && target < nums[mid])
+                    high = mid - 1;
+                else
+                    low = mid + 1;
+            }
+
+            // Right half is sorted
+            else {
+                if (nums[mid] < target && target <= nums[high])
+                    low = mid + 1;
+                else
+                    high = mid - 1;
+            }
+        }
+
+        return -1;
     }
 };
+
+
+
+
