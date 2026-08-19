@@ -1,0 +1,62 @@
+AIM:- Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
+
+ALGORITHM :- 
+ Queue Using Two Stacks
+
+Let the two stacks be S1 and S2.
+
+push(x)
+Push the new element x into S1.
+This stores elements in the order they arrive.
+pop()
+If S2 is empty:
+Move all elements from S1 to S2 one by one.
+The top of S2 is now the oldest element.
+Pop and return the top element of S2.
+peek()
+If S2 is empty:
+Move all elements from S1 to S2.
+Return the top element of S2 without removing it.
+empty()
+Check whether both S1 and S2 are empty.
+If both are empty, return true.
+Otherwise, return false.
+
+CODE:-
+class MyQueue {
+public:
+    stack<int> s1, s2;
+
+    MyQueue() {
+    }
+
+    void push(int x) {
+        s1.push(x);
+    }
+
+    int pop() {
+        if (s2.empty()) {
+            while (!s1.empty()) {
+                s2.push(s1.top());
+                s1.pop();
+            }
+        }
+        int x = s2.top();
+        s2.pop();
+        return x;
+    }
+
+    int peek() {
+        if (s2.empty()) {
+            while (!s1.empty()) {
+                s2.push(s1.top());
+                s1.pop();
+            }
+        }
+        return s2.top();
+    }
+
+    bool empty() {
+        return s1.empty() && s2.empty();
+    }
+};
