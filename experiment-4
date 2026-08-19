@@ -1,0 +1,44 @@
+AIM:- Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+ALGORITHM :-
+The easiest method is to use two pointers and reverse the second half of the linked list.
+
+Set two pointers:
+slow = head
+fast = head
+Move slow one step and fast two steps at a time.
+When fast reaches the end, slow will be at the middle of the list.
+Reverse the linked list starting from slow.
+Set:
+left = head
+right = reversed second half
+Compare the values of left and right one by one.
+If any values are different, return false.
+If all corresponding values are the same, return true.
+
+CODE:-
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        vector<int> arr;
+
+        // Store values in array
+        while (head != NULL) {
+            arr.push_back(head->val);
+            head = head->next;
+        }
+
+        // Check palindrome
+        int i = 0;
+        int j = arr.size() - 1;
+
+        while (i < j) {
+            if (arr[i] != arr[j])
+                return false;
+
+            i++;
+            j--;
+        }
+
+        return true;
+    }
+};
